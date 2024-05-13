@@ -17,10 +17,12 @@ import lombok.RequiredArgsConstructor;
 public class ChatController {
 	private final SimpMessagingTemplate template;
 	private final ChatMessageService service;
+    private final ChatMessageRepository chatRepository;
 	
-	@MessageMapping("/chat")
+	@MessageMapping("/chat/sendmessage")
     public void processMessage(@Payload ChatMessage chatMessage) {
-        ChatMessage savedMsg = service.save(chatMessage);
+        System.out.println("hi");
+        ChatMessage savedMsg = chatRepository.save(chatMessage);
         // imane/queue/messages
         template.convertAndSendToUser(
                 chatMessage.getReciverId(), "/queue/messages",

@@ -139,12 +139,14 @@ function sendMessage(event) {
     const messageContent = messageInput.value.trim();
     if (messageContent && stompClient) {
         const chatMessage = {
+            chatId: nickname,
             senderId: nickname,
-            recipientId: selectedUserId,
+            reciverId: selectedUserId, 
             content: messageInput.value.trim(),
             timestamp: new Date()
         };
-        stompClient.send("/app/chat", {}, JSON.stringify(chatMessage));
+        console.log("message: ",chatMessage);
+        stompClient.send("/app/chat/sendmessage", {}, JSON.stringify(chatMessage));
         displayMessage(nickname, messageInput.value.trim());
         messageInput.value = '';
     }
